@@ -1,0 +1,26 @@
+{
+  "name": "pb-bot",
+  "version": "1.0.0",
+  "description": "A discord bot created for handle some commands",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/La-graisse-en-action/pb-bot.git"
+  },
+  "keywords": [
+    "discord",
+    "github",
+    "bot",
+    "nodejs",
+    "javascript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/La-graisse-en-action/pb-bot/issues"
+  },
+  "homepage": "https://github.com/La-graisse-en-action/pb-bot#readme"
+}
