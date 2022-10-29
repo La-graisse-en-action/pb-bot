@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/La-graisse-en-action/pb-bot/issues"
   },
-  "homepage": "https://github.com/La-graisse-en-action/pb-bot#readme"
+  "homepage": "https://github.com/La-graisse-en-action/pb-bot#readme",
+  "dependencies": {
+    "discord.js": "^14.6.0"
+  }
 }
