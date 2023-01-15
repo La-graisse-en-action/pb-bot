@@ -2,6 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, Butt
 const getCurrentDate = require('../utils/getCurrentDate')
 const logs = require('../utils/logs')
 const spotifyPlaylists = require('../constants/spotifyPlaylists')
+const playlistBtnAction = require('../helpers/playlistBtnAction')
 
 const spotifyLogo =
   'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Spotify_App_Logo.svg/1200px-Spotify_App_Logo.svg.png'
@@ -60,37 +61,13 @@ module.exports = {
 
         await i.update({ embeds: [newEmbed], components: [] })
       } else if (customId === 'pizzaTime') {
-        try {
-          logs.info('secondary button was clicked!')
-          import('../utils/clipboard.mjs').then((clipboard) => {
-            clipboard.clipboard.writeSync(spotifyPlaylists.pizza_time)
-          })
-          const newEmbed = new EmbedBuilder()
-            .setTitle('Playlists')
-            .setColor(color)
-            .setAuthor(embedAuthorObj)
-            .setDescription('Seleccionaste la playlist de Pizza Time:')
-            .addFields({ name: '🍕 Pizza Time', value: spotifyPlaylists.pizza_time })
-            .setThumbnail('https://i.scdn.co/image/ab67706c0000da8464aa85b7acef99fb136d82f1')
-            .setFooter({ text: getCurrentDate() })
-
-          const secondaryRow = new ActionRowBuilder().addComponents(
-            new ButtonBuilder()
-              .setLabel('Open in spotify')
-              .setStyle(ButtonStyle.Link)
-              .setURL(spotifyPlaylists.pizza_time)
-          )
-
-          await i.update({ embeds: [newEmbed], components: [secondaryRow] })
-        } catch (error) {
-          logs.error(error)
-          await i.update({
-            content: 'Se ha producido un error al ejecutar este comando.',
-            ephemeral: true,
-            embeds: [],
-            components: [],
-          })
-        }
+        playlistBtnAction(i, {
+          playlistUrl: spotifyPlaylists.pizza_time,
+          color,
+          name: '🍕 Pizza Time',
+          description: 'Mostrando la playlist de Pizza Time:',
+          thumbnail: 'https://i.imgur.com/8QZ7Z9C.png',
+        })
       }
     })
 
