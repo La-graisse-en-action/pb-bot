@@ -1,9 +1,11 @@
-const { Events } = require('discord.js')
+// eslint-disable-next-line no-unused-vars
+const { Events, BaseInteraction } = require('discord.js')
 const log = require('../utils/logs')
 
 module.exports = {
   name: Events.InteractionCreate,
   once: false,
+  /** @param {BaseInteraction} interaction */
   async execute(interaction) {
     if (!interaction.isChatInputCommand()) return
 
@@ -15,6 +17,9 @@ module.exports = {
     }
 
     try {
+      if (interaction.isAutocomplete()) {
+        await command.autocomplete(interaction)
+      }
       await command.execute(interaction)
     } catch (error) {
       log.error(error)

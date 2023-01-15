@@ -36,4 +36,8 @@ for (const file of commandFiles) {
   }
 }
 
+client.on('messageReactionAdd', (reaction, user) => {
+  console.log(reaction, user)
+})
+
 client.login(token)
