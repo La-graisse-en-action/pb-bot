@@ -1,11 +1,11 @@
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
 const getCurrentDate = require('../utils/getCurrentDate')
 const logs = require('../utils/logs')
+const spotifyPlaylists = require('../constants/spotifyPlaylists')
 
 const spotifyLogo =
   'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Spotify_App_Logo.svg/1200px-Spotify_App_Logo.svg.png'
-// spotify logo hex color
-const color = '#1DB954'
+const color = '#1DB954' // spotify logo hex color
 const embedAuthorObj = {
   name: 'Spotify Playlists',
   iconURL: spotifyLogo,
@@ -46,26 +46,51 @@ module.exports = {
           .setAuthor(embedAuthorObj)
           .setDescription('Mostrando todas las playlists:')
           .addFields(
-            { name: '🎵 Playlist 1', value: 'https://open.spotify.com/playlist/1' },
-            { name: '🎵 Playlist 2', value: 'https://open.spotify.com/playlist/2' }
+            Object.keys(spotifyPlaylists).map((key) => {
+              const nameSplitted = key.split('_')
+              const name = nameSplitted
+                .map((letter) => {
+                  return letter.charAt(0).toUpperCase() + letter.slice(1)
+                })
+                .join(' ')
+              return { name: `🎵 ${name}`, value: spotifyPlaylists[key] }
+            })
           )
           .setFooter({ text: getCurrentDate() })
 
         await i.update({ embeds: [newEmbed], components: [] })
       } else if (customId === 'pizzaTime') {
-        logs.info('secondary button was clicked!')
-        import('../utils/clipboard.mjs').then((clipboard) => {
-          console.log(clipboard.clipboard.writeSync('https://open.spotify.com/playlist/3'))
-        })
-        const newEmbed = new EmbedBuilder()
-          .setTitle('Playlists')
-          .setColor(color)
-          .setAuthor(embedAuthorObj)
-          .setDescription('Seleccionaste la playlist de pizza time:')
-          .addFields({ name: '🍕 Pizza Time', value: 'https://open.spotify.com/playlist/3' })
-          .setFooter({ text: getCurrentDate() })
+        try {
+          logs.info('secondary button was clicked!')
+          import('../utils/clipboard.mjs').then((clipboard) => {
+            clipboard.clipboard.writeSync(spotifyPlaylists.pizza_time)
+          })
+          const newEmbed = new EmbedBuilder()
+            .setTitle('Playlists')
+            .setColor(color)
+            .setAuthor(embedAuthorObj)
+            .setDescription('Seleccionaste la playlist de Pizza Time:')
+            .addFields({ name: '🍕 Pizza Time', value: spotifyPlaylists.pizza_time })
+            .setThumbnail('https://i.scdn.co/image/ab67706c0000da8464aa85b7acef99fb136d82f1')
+            .setFooter({ text: getCurrentDate() })
 
-        await i.update({ embeds: [newEmbed], components: [] })
+          const secondaryRow = new ActionRowBuilder().addComponents(
+            new ButtonBuilder()
+              .setLabel('Open in spotify')
+              .setStyle(ButtonStyle.Link)
+              .setURL(spotifyPlaylists.pizza_time)
+          )
+
+          await i.update({ embeds: [newEmbed], components: [secondaryRow] })
+        } catch (error) {
+          logs.error(error)
+          await i.update({
+            content: 'Se ha producido un error al ejecutar este comando.',
+            ephemeral: true,
+            embeds: [],
+            components: [],
+          })
+        }
       }
     })
 
