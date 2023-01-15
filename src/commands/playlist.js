@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
 const getCurrentDate = require('../utils/getCurrentDate')
+const logs = require('../utils/logs')
 
 const spotifyLogo =
   'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Spotify_App_Logo.svg/1200px-Spotify_App_Logo.svg.png'
@@ -38,7 +39,7 @@ module.exports = {
       const customId = i.customId
 
       if (customId === 'all') {
-        console.log('primary button was clicked!')
+        logs.info('primary button was clicked!')
         const newEmbed = new EmbedBuilder()
           .setTitle('Playlists')
           .setColor(color)
@@ -52,7 +53,10 @@ module.exports = {
 
         await i.update({ embeds: [newEmbed], components: [] })
       } else if (customId === 'pizzaTime') {
-        console.log('secondary button was clicked!')
+        logs.info('secondary button was clicked!')
+        import('../utils/clipboard.mjs').then((clipboard) => {
+          console.log(clipboard.clipboard.writeSync('https://open.spotify.com/playlist/3'))
+        })
         const newEmbed = new EmbedBuilder()
           .setTitle('Playlists')
           .setColor(color)
