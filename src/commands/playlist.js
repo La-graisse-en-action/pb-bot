@@ -66,7 +66,7 @@ module.exports = {
           color,
           name: '🍕 Pizza Time',
           description: 'Mostrando la playlist de Pizza Time:',
-          thumbnail: 'https://i.imgur.com/8QZ7Z9C.png',
+          thumbnail: 'https://i.scdn.co/image/ab67706c0000da8464aa85b7acef99fb136d82f1',
         })
       }
     })
