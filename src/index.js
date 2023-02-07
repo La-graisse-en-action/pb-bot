@@ -4,6 +4,7 @@ const fs = require('node:fs')
 const path = require('node:path')
 const client = new Client({ intents: [GatewayIntentBits.Guilds] })
 const log = require('./utils/logs')
+const { prisma, prismaClient } = require('./utils/prismaClient')
 
 client.commands = new Collection()
 
@@ -40,4 +41,18 @@ client.on('messageReactionAdd', (reaction, user) => {
   console.log(reaction, user)
 })
 
-client.login(token)
+const main = () => {
+  console.log('Hello World!')
+  client.login(token)
+  prisma()
+    .then(async () => {
+      await prismaClient.$disconnect()
+    })
+    .catch(async (err) => {
+      console.error(err)
+      await prisma.$disconnect()
+      process.exit(1)
+    })
+}
+
+main()

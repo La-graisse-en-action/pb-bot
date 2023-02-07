@@ -21,7 +21,8 @@ const msgEmbed = new EmbedBuilder()
 const row = new ActionRowBuilder().addComponents(
   // Show all playlists
   new ButtonBuilder().setCustomId('all').setLabel('🎵 Mostrar todas las playlists').setStyle(ButtonStyle.Primary),
-  new ButtonBuilder().setCustomId('pizzaTime').setLabel('🍕 Pizza Time').setStyle(ButtonStyle.Secondary)
+  new ButtonBuilder().setCustomId('pizzaTime').setLabel('🍕 Pizza Time').setStyle(ButtonStyle.Secondary),
+  new ButtonBuilder().setCustomId('rolitasChidoris').setLabel('✨ Rolitas Chidoris').setStyle(ButtonStyle.Secondary)
 )
 
 module.exports = {
@@ -67,6 +68,14 @@ module.exports = {
           name: '🍕 Pizza Time',
           description: 'Mostrando la playlist de Pizza Time:',
           thumbnail: 'https://i.scdn.co/image/ab67706c0000da8464aa85b7acef99fb136d82f1',
+        })
+      } else if (customId === 'rolitasChidoris') {
+        playlistBtnAction(i, {
+          playlistUrl: spotifyPlaylists.rolitas_chidoris,
+          color,
+          name: '✨ Rolitas Chidoris',
+          description: 'Mostrando la playlist de Rolitas Chidoris:',
+          thumbnail: 'https://i.scdn.co/image/ab67706c0000da84d3ab77ccc0b00f72d49336c0',
         })
       }
     })
