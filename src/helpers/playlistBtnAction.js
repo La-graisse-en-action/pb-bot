@@ -39,7 +39,7 @@ async function playlistBtnAction(
 
     const secondaryRow = new ActionRowBuilder().addComponents(openSpotifyBtn, copyUrlBtn, showAllBtn)
 
-    const collector = interaction.channel.createMessageComponentCollector({ time: 15000 })
+    const collector = interaction.channel.createMessageComponentCollector({ time: 25000 })
     collector.on('collect', async (i) => {
       console.log(i)
       if (!i.isButton()) return

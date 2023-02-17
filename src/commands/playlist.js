@@ -3,10 +3,10 @@ const getCurrentDate = require('../utils/getCurrentDate')
 const logs = require('../utils/logs')
 const spotifyPlaylists = require('../constants/spotifyPlaylists')
 const playlistBtnAction = require('../helpers/playlistBtnAction')
+const colors = require('../constants/colors')
 
 const spotifyLogo =
   'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Spotify_App_Logo.svg/1200px-Spotify_App_Logo.svg.png'
-const color = '#1DB954' // spotify logo hex color
 const embedAuthorObj = {
   name: 'Spotify Playlists',
   iconURL: spotifyLogo,
@@ -15,7 +15,7 @@ const embedAuthorObj = {
 const msgEmbed = new EmbedBuilder()
   .setAuthor(embedAuthorObj)
   .setTitle('Playlists')
-  .setColor(color)
+  .setColor(colors.spotifyColor)
   .setFooter({ text: getCurrentDate() })
 
 const row = new ActionRowBuilder().addComponents(
@@ -34,7 +34,7 @@ module.exports = {
       option.setName('playlists').setDescription('Elige una playlist').setAutocomplete(true)
     ),
   async execute(interaction) {
-    const collector = interaction.channel.createMessageComponentCollector({ time: 15000 })
+    const collector = interaction.channel.createMessageComponentCollector({ time: 25000 })
 
     collector.on('collect', async (i) => {
       console.log(i)
@@ -45,7 +45,7 @@ module.exports = {
         logs.info('primary button was clicked!')
         const newEmbed = new EmbedBuilder()
           .setTitle('Playlists')
-          .setColor(color)
+          .setColor(colors.spotifyColor)
           .setAuthor(embedAuthorObj)
           .setDescription('Mostrando todas las playlists:')
           .addFields(
@@ -65,7 +65,7 @@ module.exports = {
       } else if (customId === 'pizzaTime') {
         playlistBtnAction(i, {
           playlistUrl: spotifyPlaylists.pizza_time,
-          color,
+          color: colors.spotifyColor,
           name: '🍕 Pizza Time',
           description: 'Mostrando la playlist de Pizza Time:',
           thumbnail: 'https://i.scdn.co/image/ab67706c0000da8464aa85b7acef99fb136d82f1',
@@ -73,7 +73,7 @@ module.exports = {
       } else if (customId === 'rolitasChidoris') {
         playlistBtnAction(i, {
           playlistUrl: spotifyPlaylists.rolitas_chidoris,
-          color,
+          color: colors.spotifyColor,
           name: '✨ Rolitas Chidoris',
           description: 'Mostrando la playlist de Rolitas Chidoris:',
           thumbnail: 'https://i.scdn.co/image/ab67706c0000da84d3ab77ccc0b00f72d49336c0',
@@ -81,7 +81,7 @@ module.exports = {
       } else if (customId === 'lofi') {
         playlistBtnAction(i, {
           playlistUrl: spotifyPlaylists.lofi,
-          color,
+          color: colors.spotifyColor,
           name: '🎧 Lofi',
           description: 'Mostrando la playlist de Lofi:',
           thumbnail: 'https://i.scdn.co/image/ab67706c0000da84d3ab77ccc0b00f72d49336c0',

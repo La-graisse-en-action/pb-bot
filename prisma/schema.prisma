@@ -13,8 +13,8 @@ datasource db {
 model Playlist {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String
-  description   String
-  addedBy       String
-  url           String
+  description   String?
+  addedBy       String?
+  url           String?
   playlistId    String    @unique
 }
