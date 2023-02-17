@@ -22,7 +22,8 @@ const row = new ActionRowBuilder().addComponents(
   // Show all playlists
   new ButtonBuilder().setCustomId('all').setLabel('🎵 Mostrar todas las playlists').setStyle(ButtonStyle.Primary),
   new ButtonBuilder().setCustomId('pizzaTime').setLabel('🍕 Pizza Time').setStyle(ButtonStyle.Secondary),
-  new ButtonBuilder().setCustomId('rolitasChidoris').setLabel('✨ Rolitas Chidoris').setStyle(ButtonStyle.Secondary)
+  new ButtonBuilder().setCustomId('rolitasChidoris').setLabel('✨ Rolitas Chidoris').setStyle(ButtonStyle.Secondary),
+  new ButtonBuilder().setCustomId('lofi').setLabel('🎧 Lofi').setStyle(ButtonStyle.Secondary)
 )
 
 module.exports = {
@@ -75,6 +76,14 @@ module.exports = {
           color,
           name: '✨ Rolitas Chidoris',
           description: 'Mostrando la playlist de Rolitas Chidoris:',
+          thumbnail: 'https://i.scdn.co/image/ab67706c0000da84d3ab77ccc0b00f72d49336c0',
+        })
+      } else if (customId === 'lofi') {
+        playlistBtnAction(i, {
+          playlistUrl: spotifyPlaylists.lofi,
+          color,
+          name: '🎧 Lofi',
+          description: 'Mostrando la playlist de Lofi:',
           thumbnail: 'https://i.scdn.co/image/ab67706c0000da84d3ab77ccc0b00f72d49336c0',
         })
       }
