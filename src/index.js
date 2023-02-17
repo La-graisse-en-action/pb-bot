@@ -42,7 +42,7 @@ client.on('messageReactionAdd', (reaction, user) => {
 })
 
 const main = () => {
-  console.log('Hello World!')
+  console.log('Hello World from the Panial Band!')
   client.login(token)
   prisma()
     .then(async () => {

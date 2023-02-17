@@ -12,14 +12,17 @@ module.exports = {
         .setName('playlistdata')
         .setDescription('introduce la infromacion de una playlist separada por guiones name - url - id...')
         .setRequired(true)
+    )
+    .addAttachmentOption((option) =>
+      option.setName('attachment').setDescription('Añade una imagen a la playlist').setRequired(false)
     ),
   async execute(interaction) {
     const playlistData = interaction.options.getString('playlistdata') ?? 'No data provided'
     const dataSplitted = playlistData.split('-').map((item) => item.trim())
     console.log(dataSplitted)
+    console.log('interaction: ', interaction)
 
     if (dataSplitted.join(' ') === 'No data provided' || dataSplitted.length <= 3) {
-      console.log('Wrong format embed')
       const newEmbed = new EmbedBuilder()
         .setTitle('Add Playlist: Wrong Format')
         .setColor(colors.red)

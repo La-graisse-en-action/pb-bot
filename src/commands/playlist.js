@@ -84,7 +84,7 @@ module.exports = {
           color: colors.spotifyColor,
           name: '🎧 Lofi',
           description: 'Mostrando la playlist de Lofi:',
-          thumbnail: 'https://i.scdn.co/image/ab67706c0000da84d3ab77ccc0b00f72d49336c0',
+          thumbnail: 'https://i.scdn.co/image/ab67706c0000da84514e804d7597c8c67910ea5e',
         })
       }
     })
