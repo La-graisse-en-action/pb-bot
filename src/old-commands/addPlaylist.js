@@ -1,5 +1,4 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
-const { prismaClient } = require('../utils/prismaClient')
 const getCurrentDate = require('../utils/getCurrentDate')
 const colors = require('../constants/colors')
 
@@ -38,12 +37,11 @@ module.exports = {
       url: dataSplitted[1],
       playlistId: dataSplitted[2],
     }
-    await prismaClient.playlist.create({
-      data: playlistJsonToSend,
-    })
+    // await prismaClient.playlist.create({
+    //   data: playlistJsonToSend,
+    // })
 
-    const data = await prismaClient.playlist.findMany()
-    console.log(data)
+    // const data = await prismaClient.playlist.findMany()
     await interaction.reply(`Data: ${playlistData}`)
   },
 }

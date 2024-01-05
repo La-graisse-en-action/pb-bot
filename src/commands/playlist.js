@@ -4,6 +4,7 @@ const logs = require('../utils/logs')
 const spotifyPlaylists = require('../constants/spotifyPlaylists')
 const playlistBtnAction = require('../helpers/playlistBtnAction')
 const colors = require('../constants/colors')
+const commandNames = require('../constants/command-names')
 
 const spotifyLogo =
   'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Spotify_App_Logo.svg/1200px-Spotify_App_Logo.svg.png'
@@ -28,7 +29,7 @@ const row = new ActionRowBuilder().addComponents(
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('playlists')
+    .setName(commandNames.playlist)
     .setDescription('Obten las playlists de musica mas usadas en la panal band')
     .addStringOption((option) =>
       option.setName('playlists').setDescription('Elige una playlist').setAutocomplete(true)
