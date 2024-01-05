@@ -4,6 +4,7 @@ const commandNames = {
   user: `${prefix}user`,
   tweet: `${prefix}tweet`,
   playlist: `${prefix}playlist`,
+  ai: `${prefix}ai`,
 }
 
 module.exports = commandNames

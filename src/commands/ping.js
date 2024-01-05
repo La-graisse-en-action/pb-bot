@@ -4,6 +4,9 @@ const commandNames = require('../constants/command-names')
 module.exports = {
   data: new SlashCommandBuilder().setName(commandNames.ping).setDescription('Replies with Pong!'),
   async execute(interaction) {
-    await interaction.reply('Pong!')
+    console.log(interaction)
+    const username = interaction.member?.nickname ?? interaction.user.username
+
+    await interaction.reply(username ? `Pong, ${username}!` : 'Pong!')
   },
 }
