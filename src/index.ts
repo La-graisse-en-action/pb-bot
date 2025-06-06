@@ -1,5 +1,5 @@
 import { Client, GatewayIntentBits, Events } from 'discord.js';
-import { loadCommands } from './commands';
+import { loadCommands } from './load-commands';
 import { config } from './config';
 
 // Extend the Client interface to include the commands property
