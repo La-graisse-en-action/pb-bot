@@ -34,15 +34,20 @@ const loadCommands = async (client) => {
   const commandsPath = path.join(__dirname, 'commands');
   console.log(`Loading commands from: ${commandsPath}`);
   const commandFiles = fs.readdirSync(commandsPath).filter((file) => file.endsWith('.js'));
+  console.table(commandFiles);
 
   for (const file of commandFiles) {
-    const command = require(path.join(commandsPath, file));
-    // Can change "pingCommand" to whatever you use to export each command
-    if (command.pingCommand) {
-      client.commands.set(command.pingCommand.data.name, command.pingCommand);
-      commands.push(command.pingCommand);
+    const exported = require(path.join(commandsPath, file));
+    for (const key of Object.keys(exported)) {
+      const command = exported[key];
+      if (command && command.data && command.execute) {
+        client.commands.set(command.data.name, command);
+        commands.push(command);
+      }
     }
   }
+  console.table(commands.map((c) => c.data.name));
+
   return commands;
 };
 

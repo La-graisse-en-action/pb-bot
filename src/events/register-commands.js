@@ -10,6 +10,7 @@ const { REST, Routes } = require('discord.js');
  */
 const registerCommands = async (commands, clientId, token) => {
   const rest = new REST({ version: '10' }).setToken(token);
+  console.log(`Registering ${commands.length} commands for client ID: ${clientId}`);
 
   try {
     console.log('Started refreshing application (/) commands.');
