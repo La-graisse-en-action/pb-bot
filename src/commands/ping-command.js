@@ -1,20 +1,34 @@
-import { EmbedBuilder, Interaction, SlashCommandBuilder } from 'discord.js';
-import { InteractionResponseType } from 'discord-api-types/v10';
-import { SlashCommand } from '../types/slash-command';
+// @ts-check
+const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
 
-const formatAsInlineCode = (text: string): string => {
+/**
+ * @typedef {import('discord.js').CommandInteraction} CommandInteraction
+ * @typedef {Object} SlashCommand
+ * @property {SlashCommandBuilder} data
+ * @property {(interaction: CommandInteraction) => Promise<void>} execute
+ */
+
+/**
+ * Format as a Discord inline code block
+ * @param {string} text
+ * @returns {string}
+ */
+const formatAsInlineCode = (text) => {
   return `\`${text}\``;
 };
 
-export const pingCommand: SlashCommand = {
+/**
+ * @type {SlashCommand}
+ */
+const pingCommand = {
   data: new SlashCommandBuilder().setName('pb-ping').setDescription('Replies with Pong!'),
 
+  /**
+   * @param {CommandInteraction} interaction
+   */
   execute: async (interaction) => {
     const start = Date.now();
-    const { ws } = interaction.client;
-    const wsPing = ws.ping;
-
-    const dbStart = Date.now();
+    const wsPing = interaction.client.ws.ping;
     const dbPing = 1.35;
 
     const responseTime = Date.now() - start;
@@ -34,13 +48,10 @@ export const pingCommand: SlashCommand = {
         iconURL: interaction.client.user?.displayAvatarURL(),
       });
 
-    // await interaction.reply({
-    //   content: `**Discord REST latency:** ${responseTime}ms\n**Discord Gateway (WS) latency:** ${wsPing}ms\n**Database response time:** ${dbPing}ms\n**Other ping:** ${
-    //     responseTime + 1
-    //   }ms`,
-    // });
     await interaction.reply({
       embeds: [embed],
     });
   },
 };
+
+module.exports = { pingCommand };
