@@ -33,7 +33,7 @@ const whatToPlayCommand = {
   /**
    * @param {CommandInteraction} interaction
    */
-  async execute(interaction) {
+  execute: async (interaction) => {
     const gamesInput = interaction.options.get('juegos')?.value?.toString() || '';
     if (gamesInput.length > 1000 || gamesInput.length < 1) {
       await interaction.reply({

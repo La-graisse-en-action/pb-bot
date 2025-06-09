@@ -20,9 +20,14 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@huggingface/hub": "^2.2.0",
+    "@huggingface/inference": "^4.0.3",
+    "@huggingface/mcp-client": "^0.2.0",
     "@types/node": "^22.15.30",
     "discord.js": "^14.19.3",
     "dotenv": "^16.5.0",
+    "openai": "^5.2.0",
+    "replicate": "^1.0.1",
     "typescript": "^5.8.3"
   },
   "devDependencies": {
