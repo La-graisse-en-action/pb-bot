@@ -9,7 +9,9 @@
     "build": "tsc",
     "start": "node dist/bot.js",
     "nodemon": "nodemon",
-    "dev": "nodemon --watch \"src/**/*.ts\" --exec \"node --loader ts-node/esm src/bot.ts\""
+    "dev": "nodemon --watch \"src/**/*.ts\" --exec \"node --loader ts-node/esm src/bot.ts\"",
+    "migrations": "npx prisma migrate dev --name init",
+    "seed": "node prisma/seed.js"
   },
   "repository": {
     "type": "git",
@@ -42,5 +44,8 @@
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
   }
 }

@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import { prismaClient } from '../db/prisma.js';
 
 export type DbUser = {
@@ -16,6 +17,7 @@ export const createUser = async ({ id, username, createdAt }: DbUser) => {
       },
     });
 
+    console.log(chalk.green(`- User created: ${userCreated.id} - ${userCreated.name}`));
     return userCreated;
   } catch (error) {
     console.error(`Error creating user: ${error}`);

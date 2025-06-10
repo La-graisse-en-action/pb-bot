@@ -20,7 +20,7 @@ const messageCreate: CustomEvent = {
       });
     }
 
-    message.reply(`You said: ${message.content}`);
+    console.info(chalk.blue(`- Message received`));
   },
 };
 
