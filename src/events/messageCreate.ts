@@ -1,12 +1,24 @@
-import { Events } from 'discord.js';
+import { Events, Message } from 'discord.js';
 import { CustomEvent } from '../types/CustomEvent.js';
+import { getUser } from '../api/getUser.js';
+import { createUser } from '../api/createUser.js';
+import chalk from 'chalk';
 
 const messageCreate: CustomEvent = {
   name: Events.MessageCreate,
   once: false,
-  execute: async (message) => {
-    console.log(`Message from ${message.author.tag}: ${message.content}`);
+  execute: async (message: Message) => {
     if (message.author.bot) return;
+    console.log(chalk.blue(`- Message from ${message.author.tag}: ${message.content}`));
+
+    const user = await getUser(message.author.id);
+    if (!user) {
+      await createUser({
+        id: message.author.id,
+        username: message.author.username,
+        createdAt: message.author.createdAt || new Date(),
+      });
+    }
 
     message.reply(`You said: ${message.content}`);
   },
