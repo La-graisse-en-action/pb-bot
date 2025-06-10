@@ -1,5 +1,5 @@
-// @ts-check
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+import { EmbedBuilder, SlashCommandBuilder } from 'discord.js';
+import { SlashCommand } from '../types/SlashCommand.js';
 
 const defaultGames = [
   'Rocket League',
@@ -13,26 +13,14 @@ const defaultGames = [
   'Apex Legends',
 ];
 
-/**
- * @typedef {import('discord.js').CommandInteraction} CommandInteraction
- * @typedef {Object} SlashCommand
- * @property {import('discord.js').SlashCommandOptionsOnlyBuilder} data
- * @property {(interaction: CommandInteraction) => Promise<void>} execute
- */
-
-/**
- * @type {SlashCommand}
- */
-const whatToPlayCommand = {
+export const whatToPlayCommand: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName('pb-play')
     .setDescription('Elige un juego al azar de una lista prehecha o personalizada')
     .addStringOption((opt) =>
       opt.setName('juegos').setDescription('Lista de juegos separados por coma o espacio (opcional)').setRequired(false)
-    ),
-  /**
-   * @param {CommandInteraction} interaction
-   */
+    ) as SlashCommandBuilder,
+
   execute: async (interaction) => {
     const gamesInput = interaction.options.get('juegos')?.value?.toString() || '';
     if (gamesInput.length > 1000 || gamesInput.length < 1) {
@@ -80,4 +68,4 @@ const whatToPlayCommand = {
   },
 };
 
-module.exports = { whatToPlayCommand };
+export default whatToPlayCommand;

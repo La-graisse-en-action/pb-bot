@@ -1,22 +1,15 @@
-const { EmbedBuilder } = require('discord.js');
-const { SlashCommandBuilder } = require('discord.js');
+import { APIEmbedField, EmbedBuilder, SlashCommandBuilder } from 'discord.js';
+import { SlashCommand } from '../types/SlashCommand.js';
 
-const userCommand = {
+export const userCommand: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName('pb-user')
     .setDescription('Muestra información del usuario que ejecuta el comando'),
 
-  /**
-   * @param {import('discord.js').CommandInteraction} interaction
-   */
   execute: async (interaction) => {
     const user = interaction.user;
 
-    /**
-     * @type {Array<{ name: string, value: string, inline?: boolean }>}
-     * @description Fields of the embed that show user information.
-     */
-    const fields = [
+    const fields: APIEmbedField[] = [
       { name: 'ID:', value: user.id, inline: true },
       { name: 'Tag:', value: user.tag, inline: true },
       { name: 'Bot:', value: user.bot ? '✅ Sí' : '❌ No', inline: true },
@@ -34,17 +27,14 @@ const userCommand = {
       { name: 'Banner:', value: user.bannerURL() ? `[Ver banner](${user.bannerURL()})` : '—', inline: true },
     ];
 
-    /**
-     * @type {import('discord.js').EmbedBuilder}
-     */
     const embed = new EmbedBuilder()
       .setTitle(`Información de ${user.username}`)
       .setDescription(`ID: ${user.id}`)
-      .setThumbnail(user.displayAvatarURL({ dynamic: true }))
+      .setThumbnail(user.displayAvatarURL({ extension: 'png', size: 128 }))
       .addFields(fields);
 
     await interaction.reply({ embeds: [embed] });
   },
 };
 
-module.exports = { userCommand };
+export default userCommand;

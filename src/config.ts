@@ -1,6 +1,5 @@
-'use strict';
-
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 const config = {
   token: process.env.TOKEN || '',
@@ -11,4 +10,6 @@ const config = {
   huggingFaceApiKey: process.env.HUGGING_FACE_API_KEY || '',
 };
 
-module.exports = config;
+export default config;
+export type Config = typeof config;
+export type ConfigKeys = keyof Config;

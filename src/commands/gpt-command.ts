@@ -1,26 +1,18 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const OpenAI = require('openai');
-const config = require('../config.js');
-const { InferenceClient } = require('@huggingface/inference');
-
-const openai = new OpenAI({
-  baseURL: 'https://openrouter.ai/api/v1',
-  apiKey: config.openaiApiKey,
-});
+import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
+import config from '../config.js';
+import { InferenceClient } from '@huggingface/inference';
+import { SlashCommand } from '../types/SlashCommand.js';
 
 const inference = new InferenceClient(config.huggingFaceApiKey);
 
-const gptCommand = {
+export const gptCommand: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName('pb-gpt')
     .setDescription('Genera una respuesta usando modelos AI')
     .addStringOption((opt) =>
-      opt.setName('mensaje').setDescription('Escribe un mensaje para procesarlo a traves de una AI').setRequired(false)
-    ),
+      opt.setName('mensaje').setDescription('Escribe un mensaje para procesarlo a través de una AI').setRequired(true)
+    ) as SlashCommandBuilder,
 
-  /**
-   * @param {import('discord.js').CommandInteraction} interaction
-   */
   execute: async (interaction) => {
     try {
       console.log('Ejecutando modelo HUGGING FACE...');
@@ -43,8 +35,7 @@ const gptCommand = {
         max_tokens: 512,
         temperature: 0.5,
       });
-      // console.log({ response, choices: response.choices[0].message.content });
-      let messageContent = response.choices[0].message.content;
+      let messageContent = response.choices[0].message.content || '';
       if (messageContent.length < 1) {
         await interaction.reply({
           content: 'La AI no ha generado una respuesta válida. Por favor, intenta con otro mensaje.',
@@ -57,6 +48,10 @@ const gptCommand = {
       const embed = new EmbedBuilder()
         .setColor('#0099ff')
         .setTitle('Respuesta de AI')
+        .setAuthor({
+          name: interaction.user.username,
+          iconURL: interaction.user.displayAvatarURL({ extension: 'png', size: 128 }),
+        })
         .setDescription(`${interaction.user.username} dijo:`)
         .addFields({ name: 'Mensaje', value: messageInput, inline: false })
         .addFields({ name: 'Respuesta', value: messageContent, inline: false })
@@ -73,4 +68,4 @@ const gptCommand = {
   },
 };
 
-module.exports = { gptCommand };
+export default gptCommand;

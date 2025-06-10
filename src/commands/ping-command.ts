@@ -1,31 +1,15 @@
 // @ts-check
-const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
+import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
+import { SlashCommand } from '../types/SlashCommand.js';
 
-/**
- * @typedef {import('discord.js').CommandInteraction} CommandInteraction
- * @typedef {Object} SlashCommand
- * @property {SlashCommandBuilder} data
- * @property {(interaction: CommandInteraction) => Promise<void>} execute
- */
-
-/**
- * Format as a Discord inline code block
- * @param {string} text
- * @returns {string}
- */
-const formatAsInlineCode = (text) => {
+/** Format as a Discord inline code block */
+const formatAsInlineCode = (text: string): string => {
   return `\`${text}\``;
 };
 
-/**
- * @type {SlashCommand}
- */
-const pingCommand = {
+export const pingCommand: SlashCommand = {
   data: new SlashCommandBuilder().setName('pb-ping').setDescription('Replies with Pong!'),
 
-  /**
-   * @param {CommandInteraction} interaction
-   */
   execute: async (interaction) => {
     const start = Date.now();
     const wsPing = interaction.client.ws.ping;
@@ -54,4 +38,4 @@ const pingCommand = {
   },
 };
 
-module.exports = { pingCommand };
+export default pingCommand;

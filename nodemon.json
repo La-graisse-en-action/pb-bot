@@ -1,0 +1,13 @@
+{
+  "watch": ["src"],
+  "ext": "ts,json",
+  "exec": "ts-node --loader ts-node/esm src/bot.ts",
+  "verbose": true,
+  "ignore": ["src/**/*.spec.ts", "src/**/*.test.ts"],
+  "execMap": {
+    "ts": "ts-node --loader ts-node/esm"
+  },
+  "env": {
+    "NODE_ENV": "development"
+  }
+}

@@ -2,11 +2,14 @@
   "name": "pb-bot",
   "version": "1.0.0",
   "description": "Discord bot created for the Pañal Band discord server",
-  "main": "src/bot.js",
+  "main": "dist/bot.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
     "start": "node dist/bot.js",
-    "dev": "nodemon src/bot.js"
+    "nodemon": "nodemon",
+    "dev": "nodemon --watch \"src/**/*.ts\" --exec \"node --loader ts-node/esm src/bot.ts\""
   },
   "repository": {
     "type": "git",
@@ -23,15 +26,21 @@
     "@huggingface/hub": "^2.2.0",
     "@huggingface/inference": "^4.0.3",
     "@huggingface/mcp-client": "^0.2.0",
-    "@types/node": "^22.15.30",
+    "@prisma/client": "^6.9.0",
+    "chalk": "^5.4.1",
     "discord.js": "^14.19.3",
     "dotenv": "^16.5.0",
     "openai": "^5.2.0",
-    "replicate": "^1.0.1",
-    "typescript": "^5.8.3"
+    "prisma": "^6.9.0",
+    "replicate": "^1.0.1"
   },
   "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^22.15.30",
+    "@types/ws": "^8.18.1",
     "discord-api-types": "^0.38.11",
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   }
 }
