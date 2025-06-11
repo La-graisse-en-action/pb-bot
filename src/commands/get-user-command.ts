@@ -3,7 +3,7 @@ import { SlashCommand } from '../types/SlashCommand.js';
 import { formatStringCode } from '../utils/formatStringCode.js';
 import { capitalize } from '../utils/capitalize.js';
 import { getMessageByUserId } from '../api/getMessageByUserId.js';
-import { userCommandEmbedBuilder } from '../utils/userCommandEmbedBuilder.js';
+import { getUserCommandEmbedBuilder } from '../utils/getUserCommandEmbedBuilder.js';
 
 export const userCommand: SlashCommand = {
   data: new SlashCommandBuilder()
@@ -26,7 +26,7 @@ export const userCommand: SlashCommand = {
         return;
       }
 
-      const embed = await userCommandEmbedBuilder({
+      const embed = await getUserCommandEmbedBuilder({
         user: selectedUser,
         member,
       });

@@ -7,7 +7,7 @@ type UserCommandEmbedBuilderParams = {
   member: GuildMember;
 };
 
-export const userCommandEmbedBuilder = async ({ user, member }: UserCommandEmbedBuilderParams) => {
+export const getUserCommandEmbedBuilder = async ({ user, member }: UserCommandEmbedBuilderParams) => {
   try {
     const userMessagesResponse = await getMessageByUserId(user.id);
 
