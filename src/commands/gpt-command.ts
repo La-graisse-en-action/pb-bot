@@ -2,6 +2,8 @@ import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 import config from '../config.js';
 import { InferenceClient } from '@huggingface/inference';
 import { SlashCommand } from '../types/SlashCommand.js';
+import { postMessageByUserId } from '../api/postMessageByUserId.js';
+import chalk from 'chalk';
 
 const inference = new InferenceClient(config.huggingFaceApiKey);
 
@@ -17,12 +19,18 @@ export const gptCommand: SlashCommand = {
     try {
       console.log('Ejecutando modelo HUGGING FACE...');
       const messageInput = interaction.options.get('mensaje')?.value?.toString() || '';
-      if (messageInput.length > 1000 || messageInput.length < 1) {
+      const isInvalidInputMessage = messageInput.trim().length > 1000 || messageInput.trim().length < 1;
+      if (isInvalidInputMessage) {
         await interaction.reply({
           content: 'Por favor, proporciona un mensaje válido (entre 1 y 1000 caracteres).',
         });
         return;
       }
+
+      if (interaction.user.id && !isInvalidInputMessage) {
+        await postMessageByUserId(interaction.user.id, messageInput);
+      }
+
       const response = await inference.chatCompletion({
         model: 'meta-llama/Llama-3.1-8B-Instruct',
         provider: 'sambanova', // or together, fal-ai, replicate, cohere …

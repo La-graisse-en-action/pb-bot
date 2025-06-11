@@ -5,8 +5,9 @@ import { pathToFileURL } from 'url';
 import { dirname } from '../bot.js';
 import { CustomEvent } from '../types/CustomEvent.js';
 import chalk from 'chalk';
+import { LoadedCommand } from '../types/SlashCommand.js';
 
-export const loadEvents = async (client: Client) => {
+export const loadEvents = async (client: Client & { commands: Map<string, LoadedCommand> }) => {
   try {
     console.log(chalk.bgGreen(`Loading events: ${dirname}`));
     const eventsPath = path.join(dirname, 'events');
