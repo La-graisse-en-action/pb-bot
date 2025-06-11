@@ -1,39 +1,44 @@
-import { APIEmbedField, EmbedBuilder, SlashCommandBuilder } from 'discord.js';
+import { APIEmbedField, CommandInteraction, EmbedBuilder, SlashCommandBuilder } from 'discord.js';
 import { SlashCommand } from '../types/SlashCommand.js';
+import { formatStringCode } from '../utils/formatStringCode.js';
+import { capitalize } from '../utils/capitalize.js';
+import { getMessageByUserId } from '../api/getMessageByUserId.js';
+import { userCommandEmbedBuilder } from '../utils/userCommandEmbedBuilder.js';
 
 export const userCommand: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName('pb-user')
-    .setDescription('Muestra información del usuario que ejecuta el comando'),
+    .setDescription('Muestra información del usuario seleccionado o del que ejecuta el comando')
+    .addUserOption((option) =>
+      option.setName('usuario').setDescription('Usuario para mostrar la información').setRequired(false)
+    ) as SlashCommandBuilder,
 
   execute: async (interaction) => {
-    const user = interaction.user;
+    try {
+      const selectedUser = interaction.options.get('usuario')?.user || interaction.user;
+      const member = await interaction.guild?.members.fetch(selectedUser.id);
 
-    const fields: APIEmbedField[] = [
-      { name: 'ID:', value: user.id, inline: true },
-      { name: 'Tag:', value: user.tag, inline: true },
-      { name: 'Bot:', value: user.bot ? '✅ Sí' : '❌ No', inline: true },
-      { name: '\u200B', value: '\u200B', inline: false }, // Salto de línea visual
-      { name: 'Nombre de usuario:', value: user.username, inline: true },
-      { name: 'Display name:', value: user.displayName || '—', inline: true },
-      { name: 'Global name:', value: user.globalName || '—', inline: true },
-      { name: '\u200B', value: '\u200B', inline: false },
-      { name: 'Discriminator:', value: user.discriminator, inline: true },
-      { name: 'Creado el:', value: `<t:${Math.floor(user.createdTimestamp / 1000)}:F>`, inline: true },
-      { name: 'System user:', value: user.system ? '✅ Sí' : '❌ No', inline: true },
-      { name: '\u200B', value: '\u200B', inline: false },
-      { name: 'Accent Color:', value: user.hexAccentColor || '—', inline: true },
-      { name: 'Avatar URL:', value: `[Ver avatar](${user.displayAvatarURL()})`, inline: true },
-      { name: 'Banner:', value: user.bannerURL() ? `[Ver banner](${user.bannerURL()})` : '—', inline: true },
-    ];
+      if (!selectedUser || !member) {
+        await interaction.reply({
+          content: 'No se pudo obtener la información del usuario.',
+          ephemeral: true,
+        });
+        return;
+      }
 
-    const embed = new EmbedBuilder()
-      .setTitle(`Información de ${user.username}`)
-      .setDescription(`ID: ${user.id}`)
-      .setThumbnail(user.displayAvatarURL({ extension: 'png', size: 128 }))
-      .addFields(fields);
+      const embed = await userCommandEmbedBuilder({
+        user: selectedUser,
+        member,
+      });
 
-    await interaction.reply({ embeds: [embed] });
+      await interaction.reply({ embeds: [embed] });
+    } catch (error) {
+      console.error('Error executing user command:', error);
+      await interaction.reply({
+        content: 'Ocurrió un error al intentar obtener la información del usuario.',
+        ephemeral: true,
+      });
+    }
   },
 };
 
