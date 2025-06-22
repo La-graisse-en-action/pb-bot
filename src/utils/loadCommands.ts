@@ -7,6 +7,7 @@ import { registerCommands } from './registerCommands.js';
 import { LoadedCommand } from '../types/SlashCommand.js';
 import { dirname } from '../bot.js';
 import config from '../config.js';
+import chalk from 'chalk';
 
 export const loadCommands = async (
   client: Client & { commands: Map<string, LoadedCommand> }
@@ -27,12 +28,20 @@ export const loadCommands = async (
         client.commands.set(command.data.name, command);
         commands.push(command);
       } else {
-        console.warn(`Archivo ignorado (no es comando válido): ${file}`);
+        console.warn(`File ignored (not a valid command): ${file}`);
       }
     } catch (err) {
       console.error(`Error importando comando ${file}:`, err);
     }
   }
+
+  if (commands.length === 0) {
+    console.warn(chalk.yellow('- No commands found. Please check your command files.'));
+    return [];
+  }
+
+  const commandNames = commands.map((cmd) => cmd.data.name).join(', ');
+  console.log(chalk.green(`- Commands loaded: ${commandNames}`));
 
   await registerCommands(commands, config.clientId, config.token);
 

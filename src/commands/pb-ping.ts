@@ -7,10 +7,10 @@ const formatAsInlineCode = (text: string): string => {
   return `\`${text}\``;
 };
 
-export const pingCommand: SlashCommand = {
+export const pbPing: SlashCommand = {
   data: new SlashCommandBuilder().setName('pb-ping').setDescription('Replies with Pong!'),
 
-  execute: async (interaction) => {
+  execute: async (interaction, options) => {
     const start = Date.now();
     const wsPing = interaction.client.ws.ping;
     const dbPing = 1.35;
@@ -32,10 +32,16 @@ export const pingCommand: SlashCommand = {
         iconURL: interaction.client.user?.displayAvatarURL(),
       });
 
+    if (options?.returnBeforeReply) {
+      return {
+        embeds: [embed],
+      };
+    }
+
     await interaction.reply({
       embeds: [embed],
     });
   },
 };
 
-export default pingCommand;
+export default pbPing;

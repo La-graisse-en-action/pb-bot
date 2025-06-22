@@ -5,7 +5,7 @@ import { capitalize } from '../utils/capitalize.js';
 import { getMessageByUserId } from '../api/getMessageByUserId.js';
 import { getUserCommandEmbedBuilder } from '../utils/getUserCommandEmbedBuilder.js';
 
-export const userCommand: SlashCommand = {
+export const pbUser: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName('pb-user')
     .setDescription('Muestra información del usuario seleccionado o del que ejecuta el comando')
@@ -13,15 +13,19 @@ export const userCommand: SlashCommand = {
       option.setName('usuario').setDescription('Usuario para mostrar la información').setRequired(false)
     ) as SlashCommandBuilder,
 
-  execute: async (interaction) => {
+  execute: async (interaction, options) => {
     try {
       const selectedUser = interaction.options.get('usuario')?.user || interaction.user;
       const member = await interaction.guild?.members.fetch(selectedUser.id);
 
       if (!selectedUser || !member) {
+        if (options?.returnBeforeReply) {
+          return {
+            content: 'No se pudo obtener la información del usuario.',
+          };
+        }
         await interaction.reply({
           content: 'No se pudo obtener la información del usuario.',
-          ephemeral: true,
         });
         return;
       }
@@ -31,9 +35,20 @@ export const userCommand: SlashCommand = {
         member,
       });
 
+      if (options?.returnBeforeReply) {
+        return {
+          embeds: [embed],
+        };
+      }
+
       await interaction.reply({ embeds: [embed] });
     } catch (error) {
       console.error('Error executing user command:', error);
+      if (options?.returnBeforeReply) {
+        return {
+          content: 'Ocurrió un error al intentar obtener la información del usuario.',
+        };
+      }
       await interaction.reply({
         content: 'Ocurrió un error al intentar obtener la información del usuario.',
         ephemeral: true,
@@ -42,4 +57,4 @@ export const userCommand: SlashCommand = {
   },
 };
 
-export default userCommand;
+export default pbUser;

@@ -7,7 +7,7 @@ import chalk from 'chalk';
 
 const inference = new InferenceClient(config.huggingFaceApiKey);
 
-export const gptCommand: SlashCommand = {
+export const pbGpt: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName('pb-gpt')
     .setDescription('Genera una respuesta usando modelos AI')
@@ -15,12 +15,17 @@ export const gptCommand: SlashCommand = {
       opt.setName('mensaje').setDescription('Escribe un mensaje para procesarlo a través de una AI').setRequired(true)
     ) as SlashCommandBuilder,
 
-  execute: async (interaction) => {
+  execute: async (interaction, options) => {
     try {
       console.log('Ejecutando modelo HUGGING FACE...');
       const messageInput = interaction.options.get('mensaje')?.value?.toString() || '';
       const isInvalidInputMessage = messageInput.trim().length > 1000 || messageInput.trim().length < 1;
       if (isInvalidInputMessage) {
+        if (options?.returnBeforeReply) {
+          return {
+            content: 'Por favor, proporciona un mensaje válido (entre 1 y 1000 caracteres).',
+          };
+        }
         await interaction.reply({
           content: 'Por favor, proporciona un mensaje válido (entre 1 y 1000 caracteres).',
         });
@@ -45,6 +50,11 @@ export const gptCommand: SlashCommand = {
       });
       let messageContent = response.choices[0].message.content || '';
       if (messageContent.length < 1) {
+        if (options?.returnBeforeReply) {
+          return {
+            content: 'La AI no ha generado una respuesta válida. Por favor, intenta con otro mensaje.',
+          };
+        }
         await interaction.reply({
           content: 'La AI no ha generado una respuesta válida. Por favor, intenta con otro mensaje.',
         });
@@ -66,9 +76,20 @@ export const gptCommand: SlashCommand = {
         .setTimestamp()
         .setFooter({ text: 'Powered by Hugging Face' });
 
+      if (options?.returnBeforeReply) {
+        return {
+          embeds: [embed],
+        };
+      }
+
       await interaction.reply({ embeds: [embed] });
     } catch (error) {
       console.error('Error executing gpt command:', error);
+      if (options?.returnBeforeReply) {
+        return {
+          content: 'Hubo un error al ejecutar el comando. Por favor, inténtalo de nuevo más tarde.',
+        };
+      }
       await interaction.reply({
         content: 'Hubo un error al ejecutar el comando. Por favor, inténtalo de nuevo más tarde.',
       });
@@ -76,4 +97,4 @@ export const gptCommand: SlashCommand = {
   },
 };
 
-export default gptCommand;
+export default pbGpt;
