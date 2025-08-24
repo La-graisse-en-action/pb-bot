@@ -1,11 +1,7 @@
-import { Client, Events, GatewayIntentBits, Interaction, REST, Routes, SlashCommandBuilder } from 'discord.js';
-import config from './config.js';
-import fs from 'fs';
+import { Client, GatewayIntentBits } from 'discord.js';
 import path from 'path';
-import { pathToFileURL, fileURLToPath } from 'url';
-import chalk from 'chalk';
-import { prismaClient } from './db/prisma.js';
-import { loadCommands } from './utils/loadCommands.js';
+import { fileURLToPath } from 'url';
+import config from './config.js';
 import { LoadedCommand } from './types/SlashCommand.js';
 import { loadEvents } from './utils/loadEvents.js';
 

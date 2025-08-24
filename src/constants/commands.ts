@@ -1,5 +1,6 @@
 import pbDrink from '../commands/pb-drink.js';
 import pbGpt from '../commands/pb-gpt.js';
+import { pbHelp } from '../commands/pb-help.js';
 import pbPing from '../commands/pb-ping.js';
 import pbPlay from '../commands/pb-play.js';
 import pbUser from '../commands/pb-user.js';
@@ -124,5 +125,24 @@ export const commands: {
       },
     },
     execute: pbPlay.execute,
+  },
+  'pb-help': {
+    name: 'pb-help',
+    description: 'Shows the bot help',
+    localizations: {
+      'en-US': {
+        name: 'pb-help',
+        description: 'Shows the bot help',
+      },
+      'es-ES': {
+        name: 'pb-ayuda',
+        description: 'Muestra la ayuda del bot',
+      },
+      'es-419': {
+        name: 'pb-ayuda',
+        description: 'Muestra la ayuda del bot',
+      },
+    },
+    execute: pbHelp.execute,
   },
 };

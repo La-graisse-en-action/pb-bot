@@ -6,5 +6,8 @@
     }
   ],
   "cSpell.words": ["Pañal"],
-  "cSpell.enabled": false
+  "cSpell.enabled": false,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "always"
+  }
 }
