@@ -30,7 +30,7 @@ export function extractInstagramUrls(message: string): InstagramUrlData[] {
       type: type as 'reel' | 'reels' | 'p' | 'tv' | 'stories',
       code,
       fullUrl,
-      params: Object.keys(params).length > 0 ? params : undefined
+      params: Object.keys(params).length > 0 ? params : undefined,
     });
   }
 

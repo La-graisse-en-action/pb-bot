@@ -4,7 +4,6 @@ import { SlashCommand } from '../types/SlashCommand.js';
 import { getFirstInstagramUrl } from '../utils/instagram/validateInstagramUrl.js';
 import { downloadInstagramReel } from '../lib/download-instagram-reel.js';
 
-
 export const pbIg: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName('pb-ig')
@@ -23,18 +22,18 @@ export const pbIg: SlashCommand = {
 
       if (options?.returnBeforeReply) {
         return {
-          content: data.picture
+          content: data.picture,
         };
       }
 
       await interaction.reply({
-        content: data.picture
+        content: data.picture,
       });
     } catch (error) {
       console.error(error);
       return;
     }
-  }
+  },
 };
 
 export default pbIg;

@@ -17,7 +17,7 @@ export function extractVideoFromLinks(links: MediaLink[]): VideoResult {
       videoUrl: null,
       audioUrl: null,
       thumbnailUrl: null,
-      quality: null
+      quality: null,
     };
   }
 
@@ -27,12 +27,7 @@ export function extractVideoFromLinks(links: MediaLink[]): VideoResult {
   let quality: string | null = null;
 
   // Buscar el video (priorizar HD original, luego HD, luego cualquier video)
-  const videoQualities = [
-    'video_hd_original',
-    'video_hd',
-    'video_sd',
-    'video'
-  ];
+  const videoQualities = ['video_hd_original', 'video_hd', 'video_sd', 'video'];
 
   for (const link of links) {
     const qualityLower = link.quality.toLowerCase();
@@ -40,7 +35,7 @@ export function extractVideoFromLinks(links: MediaLink[]): VideoResult {
     // Identificar video
     if (qualityLower.includes('video')) {
       // Si aún no tenemos video o encontramos uno de mejor calidad
-      if (!videoUrl || videoQualities.some(q => qualityLower.includes(q))) {
+      if (!videoUrl || videoQualities.some((q) => qualityLower.includes(q))) {
         videoUrl = link.link;
         quality = link.quality;
 
@@ -61,7 +56,7 @@ export function extractVideoFromLinks(links: MediaLink[]): VideoResult {
     videoUrl,
     audioUrl,
     thumbnailUrl,
-    quality
+    quality,
   };
 }
 
@@ -70,9 +65,7 @@ export function getVideoUrl(links: MediaLink[]): string | null {
   if (!links || links.length === 0) return null;
 
   // Buscar primer link que contenga 'video' en quality
-  const videoLink = links.find(link =>
-    link.quality.toLowerCase().includes('video')
-  );
+  const videoLink = links.find((link) => link.quality.toLowerCase().includes('video'));
 
   return videoLink?.link || null;
 }
@@ -81,9 +74,7 @@ export function getVideoUrl(links: MediaLink[]): string | null {
 export function getBestQualityVideo(links: MediaLink[]): MediaLink | null {
   if (!links || links.length === 0) return null;
 
-  const videoLinks = links.filter(link =>
-    link.quality.toLowerCase().includes('video')
-  );
+  const videoLinks = links.filter((link) => link.quality.toLowerCase().includes('video'));
 
   if (videoLinks.length === 0) return null;
 
@@ -91,9 +82,7 @@ export function getBestQualityVideo(links: MediaLink[]): MediaLink | null {
   const priorities = ['original', 'hd', 'sd'];
 
   for (const priority of priorities) {
-    const found = videoLinks.find(link =>
-      link.quality.toLowerCase().includes(priority)
-    );
+    const found = videoLinks.find((link) => link.quality.toLowerCase().includes(priority));
     if (found) return found;
   }
 

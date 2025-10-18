@@ -10,7 +10,7 @@ export type ReelData = {
   title: string;
   picture: string;
   thumbnail: string;
-}
+};
 
 export async function downloadInstagramReel(URL: string): Promise<ReelData> {
   const response = await axios.request({
@@ -18,23 +18,21 @@ export async function downloadInstagramReel(URL: string): Promise<ReelData> {
     url: rapidApiUrl,
     params: {
       url: URL,
-      filename: 'download'
+      filename: 'download',
     },
     headers: {
       'X-RapidAPI-Key': '824dddee65msh76dbe040b14bfe4p12ab6ajsnc6532155d4f8',
-      'X-RapidAPI-Host': 'social-media-video-downloader.p.rapidapi.com'
-    }
+      'X-RapidAPI-Host': 'social-media-video-downloader.p.rapidapi.com',
+    },
   });
 
   if (response.status !== 200) {
-    console.error(chalk.red(
-      `Error downloading Instagram reel: ${response.status} - ${response.statusText}`
-    ));
+    console.error(chalk.red(`Error downloading Instagram reel: ${response.status} - ${response.statusText}`));
     return {
       src: '',
       title: '',
       picture: '',
-      thumbnail: ''
+      thumbnail: '',
     };
   }
 
@@ -45,6 +43,6 @@ export async function downloadInstagramReel(URL: string): Promise<ReelData> {
     src: data.src_url,
     title: clearInstagramCaption(data.title),
     thumbnail: data.picture,
-    picture: videoUrl ? videoUrl : data.picture
+    picture: videoUrl ? videoUrl : data.picture,
   };
 }

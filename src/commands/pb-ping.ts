@@ -3,7 +3,6 @@ import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 import { SlashCommand } from '../types/SlashCommand.js';
 import { formatStringCode } from '../utils/formatStringCode.js';
 
-
 export const pbPing: SlashCommand = {
   data: new SlashCommandBuilder().setName('pb-ping').setDescription('Replies with Pong!'),
 
@@ -26,19 +25,19 @@ export const pbPing: SlashCommand = {
       .setTimestamp()
       .setFooter({
         text: 'Requested by ' + interaction.user.username,
-        iconURL: interaction.client.user?.displayAvatarURL()
+        iconURL: interaction.client.user?.displayAvatarURL(),
       });
 
     if (options?.returnBeforeReply) {
       return {
-        embeds: [embed]
+        embeds: [embed],
       };
     }
 
     await interaction.reply({
-      embeds: [embed]
+      embeds: [embed],
     });
-  }
+  },
 };
 
 export default pbPing;

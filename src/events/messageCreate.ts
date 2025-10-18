@@ -22,9 +22,9 @@ const messageCreate: CustomEvent = {
     if (hasInstagramUrl(message.toString())) {
       const urlData = getFirstInstagramUrl(message.toString());
       const data = await downloadInstagramReel(urlData?.fullUrl ?? '');
-      await sendReelEmbed(message, data)
+      await sendReelEmbed(message, data);
     }
-  }
+  },
 };
 
 export default messageCreate;

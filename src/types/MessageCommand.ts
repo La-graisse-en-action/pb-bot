@@ -1,5 +1,4 @@
-import { CommandInteraction } from 'discord.js';
-import { SlashCommand, SlashCommandExecute, SlashCommandOptions } from './SlashCommand.js';
+import { SlashCommandExecute } from './SlashCommand.js';
 
 export type MessageCommand = {
   name: string;

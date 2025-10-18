@@ -1,11 +1,4 @@
-import {
-  CommandInteraction,
-  EmbedBuilder,
-  Interaction,
-  InteractionReplyOptions,
-  MessagePayload,
-  SlashCommandBuilder,
-} from 'discord.js';
+import { CommandInteraction, InteractionReplyOptions, MessagePayload, SlashCommandBuilder } from 'discord.js';
 
 export type SlashCommandOptions = {
   returnBeforeReply?: boolean;
