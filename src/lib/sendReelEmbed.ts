@@ -1,4 +1,4 @@
-import { EmbedBuilder, Message } from 'discord.js';
+import { Message } from 'discord.js';
 import { ReelData } from './download-instagram-reel.js';
 import axios from 'axios';
 import fs from 'fs';
