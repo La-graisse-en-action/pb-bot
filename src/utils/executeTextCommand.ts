@@ -1,15 +1,15 @@
 // src/core/executeTextCommand.ts
 
-import { CommandInteraction, Message } from 'discord.js';
-import { loadCommandFromMessage } from './loadCommandFromMessage.js';
-import { commands } from '../constants/commands.js';
 import chalk from 'chalk';
+import { CommandInteraction, Message } from 'discord.js';
+import { commands } from '../constants/commands.js';
+import { loadCommandFromMessage } from './loadCommandFromMessage.js';
 
 export async function executeTextCommand(message: Message) {
   const cmd = loadCommandFromMessage(message.content);
   if (cmd) {
     // Ejecuta la lógica de tu comando aquí
-    message.reply(`Comando detectado: ${cmd}`);
+    // message.reply(`Comando detectado: ${cmd}`);
     const command = commands[cmd];
     if (command) {
       try {
