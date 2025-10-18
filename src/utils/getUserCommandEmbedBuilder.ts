@@ -1,6 +1,5 @@
 import { APIEmbedField, EmbedBuilder, GuildMember, User } from 'discord.js';
 import { formatStringCode } from './formatStringCode.js';
-import { getMessageByUserId } from '../api/getMessageByUserId.js';
 
 type UserCommandEmbedBuilderParams = {
   user: User;
@@ -9,8 +8,6 @@ type UserCommandEmbedBuilderParams = {
 
 export const getUserCommandEmbedBuilder = async ({ user, member }: UserCommandEmbedBuilderParams) => {
   try {
-    const userMessagesResponse = await getMessageByUserId(user.id);
-
     const fields: APIEmbedField[] = [
       { name: 'User ID', value: formatStringCode(user.id), inline: true },
       { name: 'Username', value: formatStringCode(user.username), inline: true },
@@ -73,12 +70,6 @@ export const getUserCommandEmbedBuilder = async ({ user, member }: UserCommandEm
       { name: '\u200B', value: '\u200B', inline: false },
       { name: 'Account Created', value: `<t:${Math.floor(user.createdTimestamp / 1000)}:F>`, inline: true },
       { name: 'Server Boosts', value: member.guild.premiumSubscriptionCount?.toString() ?? '—', inline: true },
-      {
-        name: 'Messages Sent',
-        value:
-          userMessagesResponse.data?.length > 0 ? userMessagesResponse.data.length.toString() : 'No messages found',
-        inline: true,
-      },
     ].filter(Boolean);
 
     const embed = new EmbedBuilder()

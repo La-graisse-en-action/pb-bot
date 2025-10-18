@@ -1,8 +1,5 @@
-import { APIEmbedField, CommandInteraction, EmbedBuilder, SlashCommandBuilder } from 'discord.js';
+import { SlashCommandBuilder } from 'discord.js';
 import { SlashCommand } from '../types/SlashCommand.js';
-import { formatStringCode } from '../utils/formatStringCode.js';
-import { capitalize } from '../utils/capitalize.js';
-import { getMessageByUserId } from '../api/getMessageByUserId.js';
 import { getUserCommandEmbedBuilder } from '../utils/getUserCommandEmbedBuilder.js';
 
 export const pbUser: SlashCommand = {

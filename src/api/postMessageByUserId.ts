@@ -1,7 +1,7 @@
 import { Message } from '@prisma/client';
+import chalk from 'chalk';
 import { prismaClient } from '../db/prisma.js';
 import { ApiResponse } from '../types/ApiResponse.js';
-import chalk from 'chalk';
 
 export const postMessageByUserId = async (userId: string, message: string) => {
   try {
