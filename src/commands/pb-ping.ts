@@ -1,11 +1,8 @@
 // @ts-check
 import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 import { SlashCommand } from '../types/SlashCommand.js';
+import { formatStringCode } from '../utils/formatStringCode.js';
 
-/** Format as a Discord inline code block */
-const formatAsInlineCode = (text: string): string => {
-  return `\`${text}\``;
-};
 
 export const pbPing: SlashCommand = {
   data: new SlashCommandBuilder().setName('pb-ping').setDescription('Replies with Pong!'),
@@ -20,28 +17,28 @@ export const pbPing: SlashCommand = {
     const embed = new EmbedBuilder()
       .setTitle('Pong!')
       .addFields(
-        { name: 'Discord REST latency', value: formatAsInlineCode(`${responseTime}ms`), inline: false },
-        { name: 'Discord Gateway (WS) latency', value: formatAsInlineCode(`${wsPing}ms`), inline: false },
-        { name: 'Database response time', value: formatAsInlineCode(`${dbPing}ms`), inline: false },
-        { name: 'Other ping', value: formatAsInlineCode(`${responseTime + 1}ms`), inline: false }
+        { name: 'Discord REST latency', value: formatStringCode(`${responseTime}ms`), inline: false },
+        { name: 'Discord Gateway (WS) latency', value: formatStringCode(`${wsPing}ms`), inline: false },
+        { name: 'Database response time', value: formatStringCode(`${dbPing}ms`), inline: false },
+        { name: 'Other ping', value: formatStringCode(`${responseTime + 1}ms`), inline: false }
       )
       .setColor(0x00ff00)
       .setTimestamp()
       .setFooter({
         text: 'Requested by ' + interaction.user.username,
-        iconURL: interaction.client.user?.displayAvatarURL(),
+        iconURL: interaction.client.user?.displayAvatarURL()
       });
 
     if (options?.returnBeforeReply) {
       return {
-        embeds: [embed],
+        embeds: [embed]
       };
     }
 
     await interaction.reply({
-      embeds: [embed],
+      embeds: [embed]
     });
-  },
+  }
 };
 
 export default pbPing;
