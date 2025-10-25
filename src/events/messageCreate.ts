@@ -1,10 +1,9 @@
 import chalk from 'chalk';
 import { Events, Message } from 'discord.js';
+import { initInstagramService } from '../services/instagram/index.js';
 import { CustomEvent } from '../types/CustomEvent.js';
 import { executeTextCommand } from '../utils/executeTextCommand.js';
-import { getFirstInstagramUrl, hasInstagramUrl } from '../utils/instagram/validateInstagramUrl.js';
-import { downloadInstagramReel } from '../lib/download-instagram-reel.js';
-import { sendReelEmbed } from '../lib/sendReelEmbed.js';
+import { hasInstagramUrl } from '../services/instagram/utils/validateInstagramUrl.js';
 
 const messageCreate: CustomEvent = {
   name: Events.MessageCreate,
@@ -20,9 +19,7 @@ const messageCreate: CustomEvent = {
     }
 
     if (hasInstagramUrl(message.toString())) {
-      const urlData = getFirstInstagramUrl(message.toString());
-      const data = await downloadInstagramReel(urlData?.fullUrl ?? '');
-      await sendReelEmbed(message, data);
+      await initInstagramService({ message });
     }
   },
 };
