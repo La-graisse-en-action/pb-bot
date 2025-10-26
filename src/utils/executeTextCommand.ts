@@ -1,9 +1,9 @@
 // src/core/executeTextCommand.ts
 
 import chalk from 'chalk';
-import { CommandInteraction, Message } from 'discord.js';
-import { commands } from '../constants/commands.js';
-import { loadCommandFromMessage } from './loadCommandFromMessage.js';
+import { ChatInputCommandInteraction, Message } from 'discord.js';
+import { commands } from '../constants/commands';
+import { loadCommandFromMessage } from './loadCommandFromMessage';
 
 export async function executeTextCommand(message: Message) {
   const cmd = loadCommandFromMessage(message.content);
@@ -55,7 +55,7 @@ export async function executeTextCommand(message: Message) {
               },
             },
             guild: message.guild,
-          } as CommandInteraction,
+          } as unknown as ChatInputCommandInteraction,
           {
             returnBeforeReply: true,
           }

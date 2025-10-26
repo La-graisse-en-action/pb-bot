@@ -1,13 +1,13 @@
 // src/utils/loadCommands.ts
+import chalk from 'chalk';
 import { Client } from 'discord.js';
 import fs from 'fs';
 import path from 'path';
 import { pathToFileURL } from 'url';
-import { registerCommands } from './registerCommands.js';
-import { LoadedCommand } from '../types/SlashCommand.js';
-import { dirname } from '../bot.js';
-import config from '../config.js';
-import chalk from 'chalk';
+import { dirname } from '../bot';
+import config from '../config';
+import { type LoadedCommand } from '../types/SlashCommand';
+import { registerCommands } from './registerCommands';
 
 export const loadCommands = async (
   client: Client & { commands: Map<string, LoadedCommand> }

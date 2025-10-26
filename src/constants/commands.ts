@@ -1,11 +1,11 @@
-import pbDrink from '../commands/pb-drink.js';
-import pbGpt from '../commands/pb-gpt.js';
-import { pbHelp } from '../commands/pb-help.js';
-import pbPing from '../commands/pb-ping.js';
-import pbPlay from '../commands/pb-play.js';
-import pbUser from '../commands/pb-user.js';
-import { MessageCommand } from '../types/MessageCommand.js';
-import pbIg from '../commands/pb-ig.js';
+import pbDrink from '../commands/pb-drink';
+import pbGpt from '../commands/pb-gpt';
+import { pbHelp } from '../commands/pb-help';
+import pbIg from '../commands/pb-ig';
+import pbPing from '../commands/pb-ping';
+import pbPlay from '../commands/pb-play';
+import pbUser from '../commands/pb-user';
+import { type MessageCommand } from '../types/MessageCommand';
 
 export const commands: {
   [key: string]: MessageCommand;

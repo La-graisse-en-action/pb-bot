@@ -1,5 +1,5 @@
-import { APIEmbedField, EmbedBuilder, GuildMember, User } from 'discord.js';
-import { formatStringCode } from './formatStringCode.js';
+import { type APIEmbedField, EmbedBuilder, GuildMember, User } from 'discord.js';
+import { formatStringCode } from './formatStringCode';
 
 type UserCommandEmbedBuilderParams = {
   user: User;

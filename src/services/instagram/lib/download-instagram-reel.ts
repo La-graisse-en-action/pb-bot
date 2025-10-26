@@ -1,7 +1,7 @@
 import axios from 'axios';
 import chalk from 'chalk';
-import { clearInstagramCaption } from '../utils/clearInstagramCaption.js';
-import { getVideoUrl } from '../utils/extract-video-from-links.js';
+import { clearInstagramCaption } from '../utils/clearInstagramCaption';
+import { getVideoUrl } from '../utils/extract-video-from-links';
 
 const rapidApiUrl = 'https://social-media-video-downloader.p.rapidapi.com/smvd/get/all';
 const MAX_FILE_SIZE = 25 * 1024 * 1024; // 25MB límite de Discord para bots normales

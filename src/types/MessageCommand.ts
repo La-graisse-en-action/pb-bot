@@ -1,4 +1,4 @@
-import { SlashCommandExecute } from './SlashCommand.js';
+import { type SlashCommandExecute } from './SlashCommand';
 
 export type MessageCommand = {
   name: string;

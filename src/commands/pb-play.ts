@@ -1,5 +1,5 @@
 import { EmbedBuilder, SlashCommandBuilder } from 'discord.js';
-import { SlashCommand } from '../types/SlashCommand.js';
+import { type SlashCommand } from '../types/SlashCommand';
 
 const defaultGames = [
   'Rocket League',

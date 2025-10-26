@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import { REST, Routes } from 'discord.js';
-import { LoadedCommand } from '../types/SlashCommand.js';
-import config from '../config.js';
+import config from '../config';
+import type { LoadedCommand } from '../types/SlashCommand';
 
 export const registerCommands = async (commands: LoadedCommand[], clientId: string, token: string): Promise<void> => {
   const rest = new REST({ version: '10' }).setToken(token);

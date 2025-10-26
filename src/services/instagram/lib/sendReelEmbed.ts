@@ -1,8 +1,8 @@
 import axios, { AxiosError } from 'axios';
 import chalk from 'chalk';
-import { Message, AttachmentBuilder } from 'discord.js';
+import { AttachmentBuilder, Message } from 'discord.js';
 import { Readable } from 'stream';
-import { ReelData } from './download-instagram-reel.js';
+import { type ReelData } from './download-instagram-reel';
 
 export type SendReelOptions = {
   timeout?: number;
@@ -36,7 +36,7 @@ const DEFAULT_OPTIONS: Required<SendReelOptions> = {
 export async function sendReelEmbed(
   message: Message,
   data: ReelData,
-  options?: SendReelOptions,
+  options?: SendReelOptions
 ): Promise<SendReelResult> {
   const config = { ...DEFAULT_OPTIONS, ...options };
 
@@ -127,8 +127,8 @@ async function downloadWithRetry(url: string, timeout: number, maxRetries: numbe
       console.warn(
         chalk.yellow(
           `Download attempt ${attempt}/${maxRetries} failed:`,
-          error instanceof AxiosError ? error.code : error,
-        ),
+          error instanceof AxiosError ? error.code : error
+        )
       );
 
       // No reintentar en ciertos casos
@@ -200,7 +200,7 @@ async function addReactionSafely(message: Message): Promise<void> {
 export async function sendReelStream(
   message: Message,
   data: ReelData,
-  options?: SendReelOptions,
+  options?: SendReelOptions
 ): Promise<SendReelResult> {
   const config = { ...DEFAULT_OPTIONS, ...options };
 

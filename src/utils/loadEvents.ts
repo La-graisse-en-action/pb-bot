@@ -1,11 +1,11 @@
+import chalk from 'chalk';
 import { Client } from 'discord.js';
-import path from 'path';
 import fs from 'fs';
+import path from 'path';
 import { pathToFileURL } from 'url';
 import { dirname } from '../bot.js';
-import { CustomEvent } from '../types/CustomEvent.js';
-import chalk from 'chalk';
-import { LoadedCommand } from '../types/SlashCommand.js';
+import { type CustomEvent } from '../types/CustomEvent';
+import { type LoadedCommand } from '../types/SlashCommand';
 
 export const loadEvents = async (client: Client & { commands: Map<string, LoadedCommand> }) => {
   try {

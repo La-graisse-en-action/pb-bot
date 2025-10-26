@@ -1,7 +1,7 @@
 import chalk from 'chalk';
-import { CacheType, Events, Interaction } from 'discord.js';
-import CustomClient from '../types/CustomClient.js';
-import { CustomEvent } from '../types/CustomEvent.js';
+import { type CacheType, Events, type Interaction } from 'discord.js';
+import CustomClient from '../types/CustomClient';
+import { type CustomEvent } from '../types/CustomEvent';
 
 const interactionCreate: CustomEvent = {
   name: Events.InteractionCreate,

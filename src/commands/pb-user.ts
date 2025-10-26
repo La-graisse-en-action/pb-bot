@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from 'discord.js';
-import { SlashCommand } from '../types/SlashCommand.js';
-import { getUserCommandEmbedBuilder } from '../utils/getUserCommandEmbedBuilder.js';
+import { type SlashCommand } from '../types/SlashCommand';
+import { getUserCommandEmbedBuilder } from '../utils/getUserCommandEmbedBuilder';
 
 export const pbUser: SlashCommand = {
   data: new SlashCommandBuilder()

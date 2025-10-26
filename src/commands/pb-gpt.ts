@@ -1,9 +1,7 @@
-import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
-import config from '../config.js';
 import { InferenceClient } from '@huggingface/inference';
-import { SlashCommand } from '../types/SlashCommand.js';
-import { postMessageByUserId } from '../api/postMessageByUserId.js';
-import chalk from 'chalk';
+import { EmbedBuilder, SlashCommandBuilder } from 'discord.js';
+import config from '../config';
+import { type SlashCommand } from '../types/SlashCommand';
 
 const inference = new InferenceClient(config.huggingFaceApiKey);
 
@@ -32,10 +30,6 @@ export const pbGpt: SlashCommand = {
         return;
       }
 
-      if (interaction.user.id && !isInvalidInputMessage) {
-        await postMessageByUserId(interaction.user.id, messageInput);
-      }
-
       const response = await inference.chatCompletion({
         model: 'meta-llama/Llama-3.1-8B-Instruct',
         provider: 'sambanova', // or together, fal-ai, replicate, cohere …
@@ -48,7 +42,7 @@ export const pbGpt: SlashCommand = {
         max_tokens: 512,
         temperature: 0.5,
       });
-      let messageContent = response.choices[0].message.content || '';
+      let messageContent = response.choices?.[0]?.message?.content || '';
       if (messageContent.length < 1) {
         if (options?.returnBeforeReply) {
           return {

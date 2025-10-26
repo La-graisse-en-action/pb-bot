@@ -1,7 +1,7 @@
 // @ts-check
-import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
-import { SlashCommand } from '../types/SlashCommand.js';
-import { formatStringCode } from '../utils/formatStringCode.js';
+import { EmbedBuilder, SlashCommandBuilder } from 'discord.js';
+import { type SlashCommand } from '../types/SlashCommand';
+import { formatStringCode } from '../utils/formatStringCode';
 
 export const pbPing: SlashCommand = {
   data: new SlashCommandBuilder().setName('pb-ping').setDescription('Replies with Pong!'),

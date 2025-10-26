@@ -1,4 +1,4 @@
-import { Events, Client, Message } from 'discord.js';
+import { Events } from 'discord.js';
 
 export type CustomEvent = {
   name: string | Events;

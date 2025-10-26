@@ -1,9 +1,9 @@
 import chalk from 'chalk';
 import { Events, Message } from 'discord.js';
-import { initInstagramService } from '../services/instagram/index.js';
-import { CustomEvent } from '../types/CustomEvent.js';
-import { executeTextCommand } from '../utils/executeTextCommand.js';
-import { hasInstagramUrl } from '../services/instagram/utils/validateInstagramUrl.js';
+import { initInstagramService } from '../services/instagram/index';
+import { hasInstagramUrl } from '../services/instagram/utils/validateInstagramUrl';
+import { type CustomEvent } from '../types/CustomEvent';
+import { executeTextCommand } from '../utils/executeTextCommand';
 
 const messageCreate: CustomEvent = {
   name: Events.MessageCreate,

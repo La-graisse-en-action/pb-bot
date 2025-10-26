@@ -87,5 +87,5 @@ export function getBestQualityVideo(links: MediaLink[]): MediaLink | null {
   }
 
   // Si no hay ninguna con prioridad, devolver el primero
-  return videoLinks[0];
+  return videoLinks[0] ?? null;
 }

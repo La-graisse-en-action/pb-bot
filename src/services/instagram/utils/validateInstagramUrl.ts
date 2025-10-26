@@ -40,7 +40,7 @@ export function extractInstagramUrls(message: string): InstagramUrlData[] {
 // Función auxiliar para obtener solo la primera URL
 export function getFirstInstagramUrl(message: string): InstagramUrlData | null {
   const urls = extractInstagramUrls(message);
-  return urls.length > 0 ? urls[0] : null;
+  return urls.length > 0 ? urls[0] ?? null : null;
 }
 
 export function hasInstagramUrl(message: string): boolean {

@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { commands } from '../constants/commands.js';
+import { commands } from '../constants/commands';
 
 export const loadCommandFromMessage = (message: string) => {
   const [cmd] = message.slice(1).toLowerCase().split(/\s+/);

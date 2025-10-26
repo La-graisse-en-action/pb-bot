@@ -1,11 +1,16 @@
-import { CommandInteraction, InteractionReplyOptions, MessagePayload, SlashCommandBuilder } from 'discord.js';
+import {
+  ChatInputCommandInteraction,
+  type InteractionReplyOptions,
+  MessagePayload,
+  SlashCommandBuilder,
+} from 'discord.js';
 
 export type SlashCommandOptions = {
   returnBeforeReply?: boolean;
 };
 
 export type SlashCommandExecute = (
-  interaction: CommandInteraction,
+  interaction: ChatInputCommandInteraction,
   options?: SlashCommandOptions
 ) => Promise<MessagePayload | InteractionReplyOptions | undefined | void>;
 

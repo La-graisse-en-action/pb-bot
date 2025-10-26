@@ -1,7 +1,7 @@
 import { Message } from 'discord.js';
-import { getFirstInstagramUrl } from './utils/validateInstagramUrl.js';
-import { downloadInstagramReel } from './lib/download-instagram-reel.js';
-import { sendReelEmbed } from './lib/sendReelEmbed.js';
+import { downloadInstagramReel } from './lib/download-instagram-reel';
+import { sendReelEmbed } from './lib/sendReelEmbed';
+import { getFirstInstagramUrl } from './utils/validateInstagramUrl';
 
 export type InstagramServiceProps = {
   message: Message;
