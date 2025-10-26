@@ -5,8 +5,6 @@
       "url": "https://json.schemastore.org/package.json"
     }
   ],
-  "cSpell.words": ["Pañal"],
-  "cSpell.enabled": false,
   "editor.codeActionsOnSave": {
     "source.organizeImports": "always"
   },
