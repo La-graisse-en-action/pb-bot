@@ -1,180 +1,188 @@
 # pb-bot
 
-Discord bot created for the Panal Band discord server
+A modern Discord bot built with TypeScript and discord.js, designed for the Pañal Band Discord server. Features AI integration, Instagram media handling, and a modular command system.
 
-![](./src/images/server-logo.png)
+## Features
 
-## Example
+- 🤖 AI-powered chat responses using Hugging Face and OpenAI
+- 📱 Instagram reel and post media extraction
+- 🏗️ Modular command structure with TypeScript
+- ⚡ Built with Bun for fast development and runtime
+- 🎨 Rich embed messages and interactive components
 
-This file is basically for, how to create a new command just copy the code base and edit for ur needs
+## Prerequisites
 
-For buttons using action row
+- [Bun](https://bun.sh/) (latest version)
+- Discord Bot Token ([Discord Developer Portal](https://discord.com/developers/applications))
+- Environment variables for AI services (optional)
 
-`UPDATE`: Per the docs, it is recommended to **create new embeds**, but you use the original embed to pre-populate the new embed. Then, just update what you need and edit the message with the new embed
+## Installation
 
-@example:
+1. **Clone the repository:**
 
-```js
-const { SlashCommandBuilder } = require('discord.js');
+   ```bash
+   git clone https://github.com/La-graisse-en-action/pb-bot.git
+   cd pb-bot
+   ```
 
-module.exports = {
-  data: new SlashCommandBuilder().setName('').setDescription(''),
-  async autocomplete(interaction) {},
-  async execute(interaction) {
-    // some code here
+2. **Install dependencies:**
+
+   ```bash
+   bun install
+   ```
+
+3. **Set up environment variables:**
+
+   ```bash
+   cp .env.example .env
+   ```
+
+   Configure your `.env` file:
+
+   ```bash
+   DISCORD_TOKEN=your_discord_bot_token
+   CLIENT_ID=your_discord_client_id
+   GUILD_ID=your_discord_guild_id
+   OPENAI_API_KEY=your_openai_key # optional
+   HUGGINGFACE_TOKEN=your_hf_token # optional
+   ```
+
+## Development
+
+**Run in development mode with hot reload:**
+
+```bash
+bun run dev
+```
+
+**Build the project:**
+
+```bash
+bun run build
+```
+
+**Run the built project:**
+
+```bash
+bun start
+```
+
+**Lint the code:**
+
+```bash
+bun run lint
+```
+
+## Project Structure
+
+```text
+src/
+├── bot.ts              # Main bot entry point
+├── config.ts           # Configuration management
+├── commands/           # Slash commands
+├── events/             # Discord event handlers
+├── services/           # External service integrations
+├── types/              # TypeScript type definitions
+└── utils/              # Utility functions
+```
+
+## Creating Commands
+
+Commands follow a modular structure using TypeScript. Here's an example:
+
+```typescript
+// src/commands/example.ts
+import { SlashCommandBuilder, type ChatInputCommandInteraction } from 'discord.js';
+import type { SlashCommand } from '../types/SlashCommand';
+
+const command: SlashCommand = {
+  data: new SlashCommandBuilder().setName('example').setDescription('An example command'),
+
+  async execute(interaction: ChatInputCommandInteraction) {
+    await interaction.reply({
+      content: 'Hello from pb-bot!',
+      ephemeral: true,
+    });
   },
 };
+
+export default command;
 ```
 
-## 🛠️ Database & Prisma Setup
+Commands are automatically loaded from the `src/commands/` directory and registered with Discord.
 
-1. Prerequisites
-   • Node.js ≥ 18
-   • PostgreSQL 17 running locally (GUI tools like TablePlus, DBeaver, or pgAdmin are recommended for DB management)
+## Event Handling
 
-⸻
+Event handlers are located in `src/events/` and follow this pattern:
 
-2. Configure Database Connection
+```typescript
+// src/events/messageCreate.ts
+import type { CustomEvent } from '../types/CustomEvent';
 
-- Create your PostgreSQL database (with your preferred client or CLI):
+const event: CustomEvent = {
+  name: 'messageCreate',
+  once: false,
+  execute: async (message) => {
+    // Handle message events
+    console.log(`Message received: ${message.content}`);
+  },
+};
 
-```bash
-createdb discordbot
+export default event;
 ```
 
-- Copy the environment file example and edit your connection string:
+## Running the Bot
 
-```bash
-cp .env.example .env
-```
+1. **Ensure your bot has the necessary permissions in your Discord server:**
 
-Edit .env:
+   - Send Messages
+   - Use Slash Commands
+   - Embed Links
+   - Attach Files
 
-```bash
-DATABASE_URL="postgresql://your_user:your_password@localhost:5432/discordbot?schema=public"
-```
+2. **Start the bot:**
 
-⸻
+   ```bash
+   bun run dev  # Development with hot reload
+   # or
+   bun run build && bun start  # Production
+   ```
 
-3. Initialize Prisma
+3. **The bot will automatically:**
+   - Connect to Discord
+   - Register slash commands
+   - Load event handlers
+   - Be ready to respond to interactions
 
-Run in your project root:
+## Configuration
 
-```bash
-npx prisma init
-```
+The bot uses environment variables for configuration. Key settings include:
 
-This will create a prisma/ folder and a prisma/schema.prisma file.
+- **DISCORD_TOKEN**: Your bot's token from Discord Developer Portal
+- **CLIENT_ID**: Your Discord application's client ID
+- **GUILD_ID**: Your Discord server's ID (for development)
+- **OPENAI_API_KEY**: OpenAI API key for AI features (optional)
+- **HUGGINGFACE_TOKEN**: Hugging Face token for AI models (optional)
 
-⸻
+## Contributing
 
-4. Define Your Schema
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature-name`
+3. Make your changes following the existing code style
+4. Test your changes: `bun run dev`
+5. Commit your changes: `git commit -m 'Add feature'`
+6. Push to the branch: `git push origin feature-name`
+7. Submit a pull request
 
-Set up your models in prisma/schema.prisma, e.g.:
+## License
 
-```prisma
-model User {
-id String @id @default(cuid())
-name String?
-createdAt DateTime @default(now()) @db.Timestamptz(6)
-updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz(6)
-messages Message[]
-}
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-model Message {
-id String @id @default(cuid())
-content String
-userId String
-user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-createdAt DateTime @default(now()) @db.Timestamptz(6)
-}
-```
+## Support
 
-⸻
+- **Issues**: [GitHub Issues](https://github.com/La-graisse-en-action/pb-bot/issues)
+- **Author**: [mrluisfer](https://mrluisfer.vercel.app)
 
-5. Run Your First Migration
+---
 
-Generate and apply migrations:
-
-```bash
-npx prisma migrate dev --name init
-```
-
-⸻
-
-6. Generate Prisma Client
-
-Every time you change your schema:
-
-```bash
-npx prisma generate
-```
-
-⸻
-
-7. Seed Initial Data
-
-Create prisma/seed.js (or prisma/seed.ts for TypeScript):
-
-```javascript
-// prisma/seed.js
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
-
-async function main() {
-  await prisma.user.create({
-    data: {
-      name: 'Test User',
-      messages: {
-        create: [{ content: 'Hello world!' }],
-      },
-    },
-  });
-}
-
-main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
-```
-
-Run:
-
-```bash
-npx prisma db seed
-```
-
-⸻
-
-8. Useful Commands
-
-• Reset the database (DANGEROUS, wipes data):
-
-```bash
-npx prisma migrate reset
-```
-
-• View migration status:
-
-```bash
-npx prisma migrate status
-```
-
-• Open Prisma Studio (web GUI):
-
-```bash
-npx prisma studio
-```
-
-⸻
-
-🚦 Troubleshooting
-• If you have connection issues, double-check your DATABASE_URL and ensure PostgreSQL is running.
-• Use npx prisma migrate reset if the DB schema drifts from your migrations.
-• On Windows, run your terminal as Administrator if you encounter permissions errors.
-
-⸻
+Built with ❤️ using [Bun](https://bun.sh/) and [discord.js](https://discord.js.org/)
